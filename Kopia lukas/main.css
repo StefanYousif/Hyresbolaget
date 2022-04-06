@@ -22,6 +22,19 @@ body{
 
   }
 
+  .login {
+      align-items: center;
+      align-content: center;
+      text-align: center;
+      color: rgb(61, 129, 189);
+    background-color: white;
+    width:25%;
+    height:50%;
+    padding: 10px 0px 10px 0px;
+    border-radius: 10px;
+    margin:auto;
+  }
+
 .container{
     width: 100%;
     min-height: 30vh;
@@ -29,6 +42,7 @@ body{
     margin-right: auto;
     margin-left: auto;
     border: 1px solid black;
+    
     
 }
 
