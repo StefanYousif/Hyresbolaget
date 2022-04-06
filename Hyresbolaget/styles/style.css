@@ -1,18 +1,58 @@
+#content {
+  width: 80%;
+}
+
+
+.maincard {
+  position: absolute;
+width: 70%;
+height: 30%;
+left: 10%;
+right: 10%;
+top: 20%;
+align-items: center;
+background: #514848;
+border-radius: 43px;
+}
+
+.masterdiv {
+  width: 360px;
+  margin: 60px auto 0;
+  border-radius: 6px;
+  box-shadow: 1px 2px 3px 0 rgba(0,0,0,.10);
+  left: 10%;
+
+}
+body {
+  margin:0%
+}
 ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: rgb(189, 62, 62);
+    background-color: rgb(255, 255, 255);
   }
-  
+  .logo {
+    float:left;
+    width: 100px;
+    height: 100px;
+  }
+
+  .background {
+    max-width: 100%;
+    margin:auto;
+    padding:0px;
+    opacity: 70%;
+    display:absolute;
+  }
   li {
     float: left;
   }
   
   li a {
     display: block;
-    color: white;
+    color: rgb(0, 0, 0);
     text-align: center;
     padding: 30px 46px;
     text-decoration: none;
