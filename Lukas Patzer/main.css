@@ -1,0 +1,78 @@
+body{
+    background-color: black;
+}
+
+.header{
+    padding: 20px;
+    min-height: 30vh;
+}
+
+.container{
+    width: 100%;
+    min-height: 30vh;
+    max-width: 1280px;
+    margin-right: auto;
+    margin-left: auto;
+    border: 1px solid black;
+    
+}
+
+.header-grid{
+    display: grid;
+    grid-template-rows: 10vh 40vh;
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+    "top-section"
+    "bottom-section";
+    gap: 10px;
+}
+
+.header-grid > .top-section{
+    grid-area: top-section;
+}
+
+.header-grid > .bottom-section{
+    grid-area: bottom-section;
+}
+
+/* Header sections */
+
+/* Top */
+
+.top-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-menu{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.nav-menu li a{ 
+    margin-right: 35px;
+    margin-left: 35px;
+    text-decoration: none;
+    color: white;
+    font-weight: 300;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Bottom */
+
+.bottom-section{
+    display: flex;
+}
+
+.searchbar{
+    background-color: white;
+    height: 10vh;
+    width: 70%;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 40px;
+}
+
