@@ -4,7 +4,6 @@ body{
 
 .header{
     padding: 20px;
-    position:relative
 }
 
 .logo {
@@ -41,7 +40,7 @@ body{
     margin-right: auto;
     margin-left: auto;
     border: 1px solid black;
-    position: absolute;
+
     
 }
 
