@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logg in</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="logg_in.css" rel="stylesheet">
+    <script src="loggin.js" ></script>
+</head>      
+<body>     
+  <div class="login-box">
+    <div class="lb-header">
+      <a href="#" class="active" id="login-box-link">Login</a>
+      <a href="#" id="signup-box-link">Sign Up</a>
+    </div>
+
+    <h1>Välkommen till Hyresbolaget</h1>
+    
+    <form class="email-login">
+      <div class="u-form-group">
+          <input type="text" id="email" placeholder="Email"/>
+      </div>
+      <div class="u-form-group">
+          <input type="password" id="password" placeholder="Password"/>
+      </div>
+      <div class="u-form-group">
+        <button class="login">Log in</button>
+      </div>
+      <div class="u-form-group">
+        <a href="#" class="forgot-password">Forgot password?</a>
+      </div>
+    </form>
+    <form class="email-signup">
+        <div class="u-form-group">
+          <input type="text" id="name" placeholder="Full Name"/>
+      </div>
+      <div class="u-form-group">
+          <input type="email" id="email2" placeholder="Email"/>
+      </div>
+      <div class="u-form-group">
+          <input type="text" id="text" placeholder="Enter your mobile number"/>
+      </div>
+        
+      <div class="u-form-group">
+          <input type="password" id="password2" placeholder="Password"/>
+      </div>
+      <div class="u-form-group">
+          <input type="password" id="cpassword" placeholder="Confirm Password"/>
+      </div>
+      <div class="u-form-group">
+          <button class="signup">Sign Up</button>
+      </div>
+    </form>
+  </div>
+</body>
+<script src="loggin.js"></script>
+    <script>
+        $(".signup").click(
+                function (){
+                var username=$("#name").val();
+                var email=$("#email2").val();
+                var eid=$("#eid").val();
+                
+                var password=$("#password2").val();
+                var cpassword=$("#cpassword").val();
+                if(cpassword!=password)
+                {
+                    alert("password mismatch");
+                    return ; 
+                }
+                alert("ok ajax call "+email+"  "+password);  
+                    $.ajax({
+                        url:"register",
+                        method:"POST",
+                        data:{username:username,eid:eid,email:email,password:password},
+                        success:function(response){
+                        if(response==="true")
+                        {
+                            alert("sign up successfully");
+                        }
+                        else{
+                            alert("something went wrong!");
+                        }
+    
+                        },
+                        error: function (error){
+                            console.log(error);
+                            alert(error+" ajax fail"); 
+                        }       
+                        });
+                    });
+            ///////////// signup
+            $(".login").click(
+                function (){
+                var e_id=$("#email").val();
+                var password=$("#password").val();
+                alert(email+"   "+password);
+                $.ajax({
+                    url:"login",type:"POST",data:{e_id:e_id,password:password},
+                    success:function(response){
+                        if(response==="true"){alert("logg in successfully");
+                        window.location="home.jsp";
+                        }
+                        else{alert("Invalid username or password");}
+                    },
+                    error:function (error){
+                        alert("Ajax is not working");
+                    }
+                    
+                });
+                
+                
+                
+                });
+        
+
+    
+    </script>
+</html>
