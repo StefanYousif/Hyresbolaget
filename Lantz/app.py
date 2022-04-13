@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.secret_key = 'cairocoders-ednalan'
  
 DB_HOST = "pgserver.mau.se"
-DB_NAME = "Onlineshopz"
+DB_NAME = "am5391"
 DB_USER = "am5391"
 DB_PASS = "g7hwpp5h"
  
