@@ -1,18 +1,15 @@
 from flask import Flask, request, session, redirect, url_for, render_template, flash
-import psycopg2 #pip install psycopg2 
+import psycopg2 
 import psycopg2.extras
 import re 
 from werkzeug.security import generate_password_hash, check_password_hash
- 
+import safety 
+
+safety.googlekey
 app = Flask(__name__)
 app.secret_key = 'cairocoders-ednalan'
  
-DB_HOST = "pgserver.mau.se"
-DB_NAME = "am5391"
-DB_USER = "am5391"
-DB_PASS = "g7hwpp5h"
- 
-conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST)
+conn = psycopg2.connect(dbname=safety.DB_NAME, user=safety.DB_USER, password=safety.DB_PASS, host=safety.DB_HOST)
  
 @app.route('/')
 def home():
