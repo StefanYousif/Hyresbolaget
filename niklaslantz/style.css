@@ -1,0 +1,126 @@
+body{
+	font-family: 'Sora', sans-serif;
+	margin: auto;
+	background-color: rgb(255, 255, 255);
+}
+
+#grid {
+	display: grid;
+	grid-template-columns: minmax(100px, 200px) 1fr minmax(100px, 200px);
+	grid-template-rows: auto auto auto;
+	grid-template-areas:
+		"header header header"
+        "nav nav nav"
+		"article article article"
+		"footer footer footer";
+}
+
+header {
+	grid-area: header;
+	text-align: center;
+	background-color: rgb(255, 255, 255);
+}
+
+nav {
+	grid-area: nav;
+	background-color: rgb(255, 255, 255);
+    display: block;
+	text-align: center;
+	letter-spacing: 4px;
+}
+
+nav a{
+	display: block;
+	width: 20%;
+	padding: 10px 0;
+	float:left;
+	text-decoration: none;
+}
+
+a:link {
+	color: rgb(0, 0, 0);
+}
+  
+a:visited {
+	color: rgba(49, 49, 49, 0.171);
+}
+  
+a:hover {
+	background-color: rgb(128, 255, 159);
+	color: rgb(255, 255, 255);
+}
+  
+a:active {
+	background-color: rgb(0, 0, 0);
+	color: rgb(43, 43, 43);
+}
+
+article {
+	grid-area: article;
+	margin: auto;
+	padding-top: 4px;
+}
+
+img {
+	opacity: 0.7;
+	width: 10%;
+	
+}
+  
+img:hover {
+	opacity: 1.0;
+}
+
+form {
+	grid-area: article;
+	padding: 15px;
+	margin: auto;
+}
+
+footer {
+	grid-area: footer;
+	text-align: center;
+    padding-top: 10px;
+	color: rgb(0, 0, 0);
+}
+
+@media screen and (max-width: 850px){
+	#grid {
+		grid-template-columns: auto;
+		grid-template-rows: auto;
+		grid-template-areas: 
+			"header"
+			"nav" 
+			"article"
+			"footer";
+    }
+	main {
+		text-align: center;
+	}
+	nav {
+		text-align: center;
+	}
+	#name {
+		width: 100%;
+        text-align: center;
+	}
+	#tips {
+		width: 100%;
+        text-align: center;
+	}
+	#comment {
+		width: 100%;
+        text-align: center;
+	}
+}
+
+@media screen and (max-width: 550px) {
+    header {
+        width: 100%;
+        display:block;
+        text-align: center;
+    }
+    nav a {
+        width: 100%;
+    }
+}
