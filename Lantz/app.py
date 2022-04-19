@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.secret_key = 'cairocoders-ednalan'
  
 conn = psycopg2.connect(dbname=safety.DB_NAME, user=safety.DB_USER, password=safety.DB_PASS, host=safety.DB_HOST)
- 
+
 @app.route('/')
 def home():
     # Check if user is loggedin
