@@ -49,10 +49,10 @@ def login():
                 return redirect(url_for('home'))
             else:
                 # Account doesnt exist or username/password incorrect
-                flash('Incorrect username/password')
+                flash('fel username/password')
         else:
             # Account doesnt exist or username/password incorrect
-            flash('Incorrect username/password')
+            flash('Altkg username/password')
  
     return render_template('login.html')
   

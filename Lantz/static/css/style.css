@@ -17,7 +17,7 @@ body {
    }
 
    .nav-item{
-      font-size:36px;
+      font-size:23px;
    }
    .dropdown{
       align-items: center;
@@ -122,12 +122,14 @@ body {
   }
    
   .site-header {
-     background-color: rgba(0, 0, 0, .85);
+     background-color: #0E6EFD;
      -webkit-backdrop-filter: saturate(180%) blur(20px);
      backdrop-filter: saturate(180%) blur(20px);
   }
   .site-header a { 
   color:#fff;
+font-size: 28px;
+margin-right:20%;
   }
 
   .container {
@@ -187,7 +189,7 @@ header {
 
 h1 {
    margin: auto;
-   background-color: rgb(16, 178, 237);
+   background-color: #0E6EFD;
    color: whitesmoke;
    grid-area: header;
    text-align: left;
@@ -235,6 +237,8 @@ footer{
    touch-action: manipulation;
    vertical-align: top;
    white-space: nowrap;
+   margin-top:20%;
+   margin-left:30%;
    
  }
  
