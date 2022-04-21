@@ -43,6 +43,7 @@ Lediga garage
   </ul>
   
 </div>
+<<<<<<< HEAD
 <main>
   <button class="button-21" id="button" role="button">Logga in</button>
 
@@ -60,6 +61,19 @@ Lediga garage
             <input type="password" class="form-control" name="password" placeholder="Lösenord" id="password" required>
             <input type="submit" value="Logga in" class="form-control btn btn-success " name="">
           </form>
+=======
+  <div class="login-box" >
+  <div class="login-header">Login</div>
+  <div class="login-body">
+    <form class="form-group" action="{{ url_for('login') }}" method="post">
+        <label>Username</label>
+        <input type="text" class="form-control" name="username" placeholder="Username" id="username" required>
+        <label>Password</label>
+        <input type="password" class="form-control" name="password" placeholder="Password" id="password" required>
+        <input type="checkbox" value="checked"><b>Remember</b>
+        <input type="submit" value="Login" class="form-control btn btn-success " name="">
+    </form>
+>>>>>>> parent of df6ae57 (Update login.html)
     {% with messages = get_flashed_messages()  %}
     {% if messages %}
     {% for message in messages %}
