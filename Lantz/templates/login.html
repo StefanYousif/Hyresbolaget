@@ -6,22 +6,16 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> </head>
-<<<<<<< HEAD
-<<<<<<< HEAD
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="Lantz/script.js"></script>
   <script src="{{url_for('static', filename='script.js')}}"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly" defer></script>
 
-=======
->>>>>>> parent of 4a96b77 (Maps + login)
-=======
->>>>>>> parent of 4a96b77 (Maps + login)
 </head>
  <body style="background-color:#ccc;">
   <ul class="nav justify-content-center">
     <li>
-      <img src="{{url_for('static', filename='logo.png')}}" alt="asdd" width=200px>
+      <img src="{{url_for('static', filename='logo.png')}}" class="logo" alt="asdd" width=200px height=200px>
     </li>
     <li class="nav-item">
       <a class="nav-link active" href="#">Active</a>
@@ -48,9 +42,7 @@ Lediga garage
     <li><a class="dropdown-item" href="#">Kristianstad - Pintosvägen</a></li>
   </ul>
 </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 <main>
   <button class="button-21" id="button" role="button">Logga in</button>
 
@@ -80,10 +72,7 @@ Lediga garage
         <input type="checkbox" value="checked"><b>Remember</b>
         <input type="submit" value="Login" class="form-control btn btn-success " name="">
     </form>
->>>>>>> parent of df6ae57 (Update login.html)
-=======
-=======
->>>>>>> parent of 4a96b77 (Maps + login)
+
   <div class="login-box" >
   <div class="login-header">Logga in</div>
   <div class="login-body">
@@ -94,10 +83,7 @@ Lediga garage
         <input type="password" class="form-control" name="password" placeholder="Password" id="password" required>
         <input type="submit" value="Login" class="form-control btn btn-success " name="">
     </form>
-<<<<<<< HEAD
->>>>>>> parent of 4a96b77 (Maps + login)
-=======
->>>>>>> parent of 4a96b77 (Maps + login)
+
     {% with messages = get_flashed_messages()  %}
     {% if messages %}
     {% for message in messages %}

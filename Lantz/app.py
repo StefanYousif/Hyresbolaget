@@ -4,7 +4,7 @@ import psycopg2.extras
 import re 
 from werkzeug.security import generate_password_hash, check_password_hash
 import safety 
-import googlemaps
+
 
 safety.googlekey
 app = Flask(__name__)
