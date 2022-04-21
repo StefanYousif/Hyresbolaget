@@ -35,7 +35,6 @@ body {
     padding: 20px;
     line-height: 2;
     align-items: center;
-    align-self: center;
    }
   .msg {
   color: #721c24;
@@ -285,6 +284,11 @@ img {
 
 }
 
+.logo {
+   width:200px;
+   height:100px;
+}
+
 input {
    margin: 10px auto;
    display: block;
@@ -315,9 +319,6 @@ input {
    align-items: center;
    opacity: 0.8;
 }
-
-<<<<<<< Updated upstream
-=======
 /* 
  * Always set the map height explicitly to define the size of the div element
  * that contains the map. 
@@ -335,4 +336,3 @@ input {
    margin: 0;
    padding: 0;
  }
->>>>>>> Stashed changes
