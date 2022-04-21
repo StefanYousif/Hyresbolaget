@@ -50,10 +50,10 @@ def login():
                 return redirect(url_for('home'))
             else:
                 # Account doesnt exist or username/password incorrect
-                flash('Felaktigt lösenord')
+                flash('Incorrect username/password')
         else:
             # Account doesnt exist or username/password incorrect
-            flash('Felaktigt lösenord')
+            flash('Incorrect username/password')
  
     return render_template('login.html')
   
@@ -88,7 +88,7 @@ def register():
             # Account doesnt exists and the form data is valid, now insert new account into users table
             cursor.execute("INSERT INTO users (fullname, username, password, email) VALUES (%s,%s,%s,%s)", (fullname, username, _hashed_password, email))
             conn.commit()
-            flash('Du har lyckats logga in!')
+            flash('You have successfully registered!')
     elif request.method == 'POST':
         # Form is empty... (no POST data)
         flash('Please fill out the form!')
