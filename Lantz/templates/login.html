@@ -9,6 +9,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="Lantz/script.js"></script>
   <script src="{{url_for('static', filename='script.js')}}"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly" defer></script>
 
 </head>
  <body style="background-color:#ccc;">
@@ -57,7 +58,7 @@ Lediga garage
             <input type="text" class="form-control" name="username" placeholder="Användarnamn" id="username" required>
             <label>Lösenord</label>
             <input type="password" class="form-control" name="password" placeholder="Lösenord" id="password" required>
-            <input type="submit" value="Login" class="form-control btn btn-success " name="">
+            <input type="submit" value="Logga in" class="form-control btn btn-success " name="">
           </form>
     {% with messages = get_flashed_messages()  %}
     {% if messages %}
