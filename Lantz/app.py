@@ -52,7 +52,7 @@ def login():
                 flash('fel username/password')
         else:
             # Account doesnt exist or username/password incorrect
-            flash('Altkg username/password')
+            flash('Felaktigt namn/lösenord')
  
     return render_template('login.html')
   
