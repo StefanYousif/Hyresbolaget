@@ -6,8 +6,10 @@ document.querySelector(".close").addEventListener("click", function(){
     document.querySelector(".popup").style.display = "none";
 })
 
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+
+var elem = ".popup"; 
+$( document ).on( 'keydown', function ( e ) {
+    if ( e.keyCode === 27 ) { // ESC
+        $( elem ).hide();
     }
-}
+});
