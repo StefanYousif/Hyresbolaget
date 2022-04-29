@@ -4,7 +4,8 @@ import psycopg2.extras
 import re 
 from werkzeug.security import generate_password_hash, check_password_hash
 import safety 
-
+from werkzeug.utils import secure_filename
+import os
 safety.googlekey
 app = Flask(__name__)
 app.secret_key = 'cairocoders-ednalan'
@@ -116,6 +117,47 @@ def profile():
         return render_template('profile.html', account=account)
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
+
+UPLOAD_FOLDER = 'static/uploads/'
+  
+app.secret_key = "secret key"
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+  
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+  
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/home', methods=['POST'])
+def upload_image():
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
  
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(request.url)
+    file = request.files['file']
+    if file.filename == '':
+        flash('No image selected for uploading')
+        return redirect(request.url)
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        #print('upload_image filename: ' + filename)
+ 
+        cursor.execute("INSERT INTO upload (title) VALUES (%s)", (filename,))
+        conn.commit()
+ 
+        flash('Image successfully uploaded and displayed below')
+        return render_template('home.html', filename=filename)
+    else:
+        flash('Allowed image types are - png, jpg, jpeg, gif')
+        return redirect(request.url)
+  
+@app.route('/display/<filename>')
+def display_image(filename):
+    #print('display_image filename: ' + filename)
+    return redirect(url_for('static', filename='uploads/' + filename), code=301) 
+
 if __name__ == "__main__":
     app.run(debug=True)
