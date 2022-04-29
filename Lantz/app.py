@@ -6,6 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import safety 
 from werkzeug.utils import secure_filename
 import os
+
 safety.googlekey
 app = Flask(__name__)
 app.secret_key = 'cairocoders-ednalan'
@@ -158,6 +159,8 @@ def upload_image():
 def display_image(filename):
     #print('display_image filename: ' + filename)
     return redirect(url_for('static', filename='uploads/' + filename), code=301) 
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

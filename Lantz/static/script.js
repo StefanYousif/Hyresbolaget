@@ -13,3 +13,4 @@ $( document ).on( 'keydown', function ( e ) {
         $( elem ).hide();
     }
 });
+
