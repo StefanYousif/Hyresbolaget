@@ -105,7 +105,10 @@ def logout():
    session.pop('username', None)
    # Redirect to login page
    return redirect(url_for('login'))
-  
+@app.route('/article')
+def new_article():
+    print("hej")
+    return render_template('article.html')
 @app.route('/profile')
 def profile(): 
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
