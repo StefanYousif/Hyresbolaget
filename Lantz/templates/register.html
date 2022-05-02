@@ -16,43 +16,43 @@
  <div class="container">
    <div class="row main">
     <div class="main-login main-center">
-    <h5>Register New user or login existing account</h5>
+    <h5>Registrera eller logga in med befintlig användare</h5>
      <form action="{{ url_for('register') }}" method="post" autocomplete="off"> 
       <div class="form-group">
-       <label for="name" class="cols-sm-2 control-label">Your Name</label>
+       <label for="name" class="cols-sm-2 control-label">Ditt namn</label>
        <div class="cols-sm-10">
         <div class="input-group">
          <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-         <input type="text" class="form-control" name="fullname" id="fullname"  placeholder="Enter your Name"/>
+         <input type="text" class="form-control" name="fullname" id="fullname"  placeholder="Skriv in ditt namn"/>
         </div>
        </div>
       </div>
       <div class="form-group">
-       <label for="email" class="cols-sm-2 control-label">Your Email</label>
+       <label for="email" class="cols-sm-2 control-label">Din emailadress</label>
        <div class="cols-sm-10">
         <div class="input-group">
          <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-         <input type="text" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
+         <input type="text" class="form-control" name="email" id="email"  placeholder="Skriv in din emailadress"/>
         </div>
        </div>
       </div>
   
       <div class="form-group">
-       <label for="username" class="cols-sm-2 control-label">Username</label>
+       <label for="username" class="cols-sm-2 control-label">Användarnamn</label>
        <div class="cols-sm-10">
         <div class="input-group">
          <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-         <input type="text" class="form-control" name="username" id="username" placeholder="Enter your Username" required>
+         <input type="text" class="form-control" name="username" id="username" placeholder="Skriv in ditt användarnamn" required>
         </div>
        </div>
       </div>
   
       <div class="form-group">
-       <label for="password" class="cols-sm-2 control-label">Password</label>
+       <label for="password" class="cols-sm-2 control-label">Lösenord</label>
        <div class="cols-sm-10">
         <div class="input-group">
          <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-         <input type="password" class="form-control" name="password" placeholder="Password" id="password" required  placeholder="Enter your Password"/>
+         <input type="password" class="form-control" name="password" placeholder="Password" id="password" required  placeholder="Skriv in ditt lösenord"/>
         </div>
        </div>
       </div>

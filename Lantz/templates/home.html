@@ -4,7 +4,7 @@
   
 {% block content %}
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<p>Välkommen, {{ username }}</p>
+<p>Välkommen, {{ username|capitalize }}</p>
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
 Lägg till article
   </button>
@@ -20,44 +20,71 @@ Lägg till article
         <div class="modabody">
             <form action="{{ url_for('new_article') }}" method="post" autocomplete="off"> 
                       <div class="form-group">
-                       <label for="name" class="cols-sm-2 control-label">Adress</label>
+                       <label for="garage" class="cols-sm-2 control-label">Namn på garage</label>
                        <div class="cols-sm-10">
                         <div class="input-group">
                          <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                         <input type="text" class="form-control" name="fullname" id="fullname"  placeholder="Adress"/>
+                         <input type="text" class="form-control" name="garagename" id="garagename"  placeholder="Valfritt namn som syns på hemsidan"/>
                         </div>
                        </div>
                       </div>
                       <div class="form-group">
-                       <label for="email" class="cols-sm-2 control-label">Telefonnummer</label>
+                       <label for="renter" class="cols-sm-2 control-label">Uthyrare</label>
                        <div class="cols-sm-10">
                         <div class="input-group">
                          <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                         <input type="text" class="form-control" name="email" id="email"  placeholder="Telefonnummer"/>
+                         <input type="text" class="form-control" name="renter" id="renter"  placeholder="{{ username|capitalize }}"/>
                         </div>
                        </div>
                       </div>
                   
                       <div class="form-group">
-                       <label for="username" class="cols-sm-2 control-label">Username</label>
+                       <label for="adress" class="cols-sm-2 control-label">Gatudress</label>
                        <div class="cols-sm-10">
                         <div class="input-group">
                          <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                         <input type="text" class="form-control" name="username" id="username" placeholder="Enter your Username" required>
+                         <input type="text" class="form-control" name="gatuadress" id="gatuadress" placeholder="Ex: Rapsvägen 115" required>
                         </div>
                        </div>
                       </div>
-                  
+                <div class="form-group">
+                         <label for="adress" class="cols-sm-2 control-label">Postkod</label>
+                         <div class="cols-sm-10">
+                          <div class="input-group">
+                           <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                           <input type="text" class="form-control" name="postkod" id="postkod" placeholder="Postkod " required>
+                          </div>
+                         </div>
+                        </div>
+
+                      <div class="form-group">
+                         <label for="adress" class="cols-sm-2 control-label">Stad</label>
+                         <div class="cols-sm-10">
+                          <div class="input-group">
+                           <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                           <input type="text" class="form-control" name="stad" id="stad" placeholder="Stad" required>
+                          </div>
+                         </div>
+                        </div>
+          
                       <div class="form-group">
-                       <label for="password" class="cols-sm-2 control-label">Password</label>
+                       <label for="beskrivning" class="cols-sm-2 control-label">Beskrivning</label>
                        <div class="cols-sm-10">
                         <div class="input-group">
-                         <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                         <input type="password" class="form-control" name="password" placeholder="Password" id="password" required  placeholder="Enter your Password"/>
-                        </div>
+                          <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                          <input type="text" class="form-control" name="beskrivning" id="beskrivning" placeholder="Beskriv ditt garage" required>
+                         </div>
                        </div>
                       </div>
-                  
+                   <div class="form-group">
+                         <label for="pris" class="cols-sm-2 control-label">Pris</label>
+                         <div class="cols-sm-10">
+                          <div class="input-group">
+                           <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                           <input type="text" class="form-control" name="pris" id="pris"  placeholder="Ditt timpris på garaget"/>
+                          </div>
+                         </div>
+                        </div>
                       <div class="form-group ">
                         {% with messages = get_flashed_messages()  %}
                         {% if messages %}
@@ -71,9 +98,8 @@ Lägg till article
                         {% endfor %}
                         {% endif %}
                         {% endwith %}
-                       <input type="submit" value="Register" class="form-control btn btn-primary " name="">
+                       <input type="submit" value="Lägg till" class="form-control btn btn-primary " name="">
                        <p style="padding:5px;">
-                       <a href="{{ url_for('login') }}" class="btn btn-dark ">Login</a></p>
                         
                       </div>
                         
@@ -97,7 +123,7 @@ Lägg till article
                 <img src="{{ url_for('display_image', filename=filename) }}">
             </div>
         {% endif %}
-        <form method="post" action="/home" enctype="multipart/form-data">
+        <form method="post" action="/" enctype="multipart/form-data">
             <dl>
                 <p>
                     <input type="file" name="file" class="form-control" autocomplete="off" required>

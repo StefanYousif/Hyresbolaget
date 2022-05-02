@@ -105,9 +105,18 @@ def logout():
    session.pop('username', None)
    # Redirect to login page
    return redirect(url_for('login'))
+   
 @app.route('/article')
 def new_article():
-    print("hej")
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+    garagename = request.form['garagename']
+    renter = request.form['renter']
+    gatuadress = request.form['gatuadress']
+    postkod = request.form['postkod']
+    stad = request.form['stad']
+    beskrivning = request.form['beskrivning']
+    pris = request.form['pris']
     return render_template('article.html')
     
 @app.route('/profile')
@@ -134,7 +143,7 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/home', methods=['POST'])
+@app.route('/home', methods=['POST', 'GET'])
 def upload_image():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
  
