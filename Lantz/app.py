@@ -106,7 +106,7 @@ def logout():
    # Redirect to login page
    return redirect(url_for('login'))
    
-@app.route('/article')
+@app.route('/home', methods=['GET', 'POST'])
 def new_article():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
@@ -117,7 +117,10 @@ def new_article():
     stad = request.form['stad']
     beskrivning = request.form['beskrivning']
     pris = request.form['pris']
-    return render_template('article.html')
+    cursor.execute("INSERT INTO garage (name, renter, gatuadress, description, price, zipcode, city)  VALUES (%s,%s,%s,%s,%s,%s,%s)", (garagename, renter, gatuadress, postkod, stad, beskrivning, pris ))
+    conn.commit()
+
+    return render_template('home.html')
     
 @app.route('/profile')
 def profile(): 
