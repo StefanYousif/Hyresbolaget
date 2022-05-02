@@ -8,7 +8,20 @@
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
 Lägg till article
   </button>
-  
+  <h1>hehjhejhejhe</h1>
+  {% for row in data %}    
+            <tr>
+                <p>Garage 1</p>
+                <td>{{row[0]}}</td>
+                <td>{{row[1]}}</td>
+                <td>{{row[2]}}</td>
+                <td>{{row[3]}}</td>
+                <td>{{row[4]}}</td>
+                <td>{{row[5]}}</td>
+                <td>{{row[6]}}</td>
+            </tr>
+           
+        {% endfor %}
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -33,7 +46,7 @@ Lägg till article
                        <div class="cols-sm-10">
                         <div class="input-group">
                          <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                         <input type="text" class="form-control" name="renter" id="renter"  placeholder="{{ username|capitalize }}" readonly/>
+                         <input type="text" class="form-control" name="renter" id="renter"  placeholder="{{ username|capitalize }}"/>
                         </div>
                        </div>
                       </div>

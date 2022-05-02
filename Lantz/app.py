@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from flask import Flask, request, session, redirect, url_for, render_template, flash
 import psycopg2 
 import psycopg2.extras
@@ -106,22 +107,32 @@ def logout():
    # Redirect to login page
    return redirect(url_for('login'))
    
+@app.route('/garage', methods=['GET', 'POST'])
+def garage():
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute("select * from garage")
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('garage.html',data=data)
+
 @app.route('/home', methods=['GET', 'POST'])
 def new_article():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
     garagename = request.form['garagename']
-    renter = request.form['renter']
+    renter = [session['username']]
     gatuadress = request.form['gatuadress']
     postkod = request.form['postkod']
     stad = request.form['stad']
     beskrivning = request.form['beskrivning']
     pris = request.form['pris']
     cursor.execute("INSERT INTO garage (name, renter, gatuadress, description, price, zipcode, city)  VALUES (%s,%s,%s,%s,%s,%s,%s)", (garagename, renter, gatuadress, postkod, stad, beskrivning, pris ))
+    
     conn.commit()
+    flash('Ditt garage är nu uppe för uthyrning!')
 
     return render_template('home.html')
-    
+
 @app.route('/profile')
 def profile(): 
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -162,7 +173,7 @@ def upload_image():
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         #print('upload_image filename: ' + filename)
  
-        cursor.execute("INSERT INTO upload (title) VALUES (%s)", (filename,))
+        cursor.execute("INSERT INTO garage (title) VALUES (%s)", (filename,))
         conn.commit()
  
         flash('Image successfully uploaded and displayed below')
