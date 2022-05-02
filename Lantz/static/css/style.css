@@ -63,10 +63,12 @@ body {
   margin-bottom: 15px;
   text-align: center;
   }
-   
-  label{
+  .form-group > label {
+     margin:0px
+  } 
+  /*label{
   margin-bottom: 15px;
-  }
+  }*/
    
   input,
   input::-webkit-input-placeholder {

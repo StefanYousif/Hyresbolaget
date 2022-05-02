@@ -109,6 +109,7 @@ def logout():
 def new_article():
     print("hej")
     return render_template('article.html')
+    
 @app.route('/profile')
 def profile(): 
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
