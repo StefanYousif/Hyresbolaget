@@ -154,6 +154,23 @@ header > #header_nvaigation {
     height: 16px;
 }
 
+#toggle_button {
+    position: absolute;
+    right: 1rem;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 40px;
+    height: 31px;
+}
+
+#toggle_button .bar {
+    height: 5px;
+    width: 100%;
+    background-color: black;
+    border-radius: 10px;
+}
+
 #wrapper > main {
     grid-area: main;
     min-height: calc(100vh - 80px);
@@ -398,6 +415,83 @@ header > #header_nvaigation {
     font-size: 14px;
 }
 
+@media screen and (max-width: 600px) {
+    #wrapper {
+        grid-template-columns: auto;
+        grid-template-rows: auto;
+        grid-template-areas:
+            "header"
+            "main"
+            "footer"
+            ;
+    }
+    #wrapper > header {
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        align-items: flex-start;
+        max-height: 70px;
+    }
+    header > #header_nav {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+
+    }
+
+    header > #header_nav button {
+        width: 100%;
+        padding: 5px;
+        font-size: 20px;
+    }
+
+    header > #heder-nav:active {
+        display: flex;
+        background-color: #04AA6D;
+        color: white;
+    }
+
+    .active {
+        display: flex;
+        background-color: #04AA6D;
+        color: white;
+    }
+
+    header > #header_nvaigation {
+        display: none;
+    }
+
+    #toggle_button {
+        display: flex;
+    }
+
+    #wrapper > main .inlägg {
+        display: block;
+    }
+    #wrapper > footer {
+        padding: 10px 30px;
+    }
+
+    #wrapper > aside {
+        display: none;
+    }
+
+}
+
+
+@media screen and (max-width: 370px) {
+    #wrapper > footer > #container {
+        display: block;
+    }
+
+    #wrapper > footer > #container div{
+        width: 100%;
+        text-align: center;
+        padding-top: 10px;
+    }
+
+}
 
 
 
