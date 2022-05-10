@@ -29,6 +29,8 @@ body {
     background: linear-gradient(to bottom, #0044ff 0%, #5b6d7c 100%);
     color:#fff;
     position: relative;
+    height:20%
+
    }
    .login-body
    {
@@ -131,15 +133,23 @@ body {
      backdrop-filter: saturate(180%) blur(20px);
   }
   .site-header a { 
-  color:#fff;
-font-size: 28px;
-margin-right:20%;
+   color:#fff;
+   font-size: 20px;
+   margin-right:20%;
   }
 
   .container {
    padding: 2rem 0rem;
  }
- 
+ .py-1 {
+   /* padding-top: 0.25rem!important; */
+   padding-bottom: 0.25rem!important;
+   height:15%;
+}
+.py-1 {
+   /* padding-top: 0.25rem!important; */
+   padding-bottom: 0.25rem!important;
+} 
  @media (min-width: 576px) {
    .modal-dialog {
      max-width: 400px;
@@ -295,6 +305,7 @@ img {
 .logo {
    width:200px;
    height:100px;
+
 }
 
 input {
@@ -330,8 +341,10 @@ input {
 
  #map {
    height: 40%;
-   width: 60%;
+   width: 30%;
    position: absolute;
+   float:left;
+   margin-left:40%
  }
  
  /* 

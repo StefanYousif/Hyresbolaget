@@ -18,7 +18,7 @@ Lägg till article
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modabody">
-            <form action="{{ url_for('new_article') }}" method="post" autocomplete="off"> 
+            <form action="{{ url_for('new_article') }}" action="{{ url_for('upload_image') }}" enctype="multipart/form-data" method="post" autocomplete="off"> 
                       <div class="form-group">
                        <label for="garage" class="cols-sm-2 control-label">Namn på garage</label>
                        <div class="cols-sm-10">
@@ -164,7 +164,7 @@ Lägg till article
             <img src="{{ url_for('display_image', filename=filename) }}">
         </div>
     {% endif %}
-    <form method="post" action="/home" enctype="multipart/form-data">
+    <form method="post" action="{{ url_for('upload_image') }}"  enctype="multipart/form-data">
         <dl>
             <p>
                 <input type="file" name="file" class="form-control" autocomplete="off" required>

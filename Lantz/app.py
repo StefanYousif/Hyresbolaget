@@ -115,19 +115,18 @@ def garage():
     conn.commit()
     return render_template('garage.html',data=data)
 
-@app.route('/home', methods=['GET', 'POST'])
+@app.route('/hej', methods=['GET', 'POST'])
 def new_article():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-    garagename = request.form['garagename']
+    garagename = request.form.get('garagename',False)
     renter = [session['username']]
-    gatuadress = request.form['gatuadress']
-    postkod = request.form['postkod']
-    stad = request.form['stad']
-    beskrivning = request.form['beskrivning']
-    pris = request.form['pris']
+    gatuadress = request.form.get('gatuadress',False)
+    postkod = request.form.get('postkod',False)
+    stad = request.form.get('stad',False)
+    beskrivning = request.form.get('beskrivning',False)
+    pris = request.form.get('pris',False)
     cursor.execute("INSERT INTO garage (name, renter, gatuadress, description, price, zipcode, city)  VALUES (%s,%s,%s,%s,%s,%s,%s)", (garagename, renter, gatuadress, postkod, stad, beskrivning, pris ))
-    
     conn.commit()
     flash('Ditt garage är nu uppe för uthyrning!')
 
@@ -157,10 +156,10 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/home', methods=['POST', 'GET'])
+@app.route('/home', methods=['GET', 'POST'])
 def upload_image():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
- 
+    
     if 'file' not in request.files:
         flash('No file part')
         return redirect(request.url)
@@ -173,10 +172,10 @@ def upload_image():
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         #print('upload_image filename: ' + filename)
  
-        cursor.execute("INSERT INTO garage (title) VALUES (%s)", (filename,))
+        cursor.execute("INSERT INTO upload (title) VALUES (%s)", (filename,))
         conn.commit()
  
-        flash('Image successfully uploaded and displayed below')
+        flash('Image successfully uploaded and aisplayed below')
         return render_template('home.html', filename=filename)
     else:
         flash('Allowed image types are - png, jpg, jpeg, gif')
