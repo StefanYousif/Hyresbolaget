@@ -14,8 +14,9 @@ Lägg till article
     <h6>Uthyrare: {{row[1]}}</h6>
     <p>{{row[3]}}</p>
     <h6>Pris: {{row[4]}}</h6>
-
-</div>    
+    <img src="{{ url_for('display_image', filename=filename) }}">
+    <p>{{row[8]}}</p>
+  </div>    
            
         {% endfor %}
   <!-- Modal -->

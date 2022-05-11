@@ -127,6 +127,7 @@ def new_article():
     beskrivning = request.form.get('beskrivning',False)
     pris = request.form.get('pris',False)
     cursor.execute("INSERT INTO garage (name, renter, gatuadress, description, price, zipcode, city)  VALUES (%s,%s,%s,%s,%s,%s,%s)", (garagename, renter, gatuadress, beskrivning, pris, postkod, stad ))
+    
     conn.commit()
     flash('Ditt garage är nu uppe för uthyrning!')
 
@@ -172,7 +173,7 @@ def upload_image():
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         #print('upload_image filename: ' + filename)
  
-        cursor.execute("INSERT INTO upload (title) VALUES (%s)", (filename,))
+        cursor.execute("INSERT INTO upload (title2) VALUES (%s)", (filename,))
         conn.commit()
  
         flash('Image successfully uploaded and aisplayed below')
