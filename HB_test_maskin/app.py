@@ -114,11 +114,17 @@ def garage():
     data = cursor.fetchall()
     conn.commit()
     return render_template('garage.html',data=data)
-
+UPLOAD_FOLDER = 'static/uploads/'
+  
+app.secret_key = "secret key"
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+  
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+  
 @app.route('/hej', methods=['GET', 'POST'])
 def new_article():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
     garagename = request.form.get('garagename',False)
     renter = [session['username']]
     gatuadress = request.form.get('gatuadress',False)
@@ -130,7 +136,28 @@ def new_article():
     conn.commit()
     flash('Ditt garage är nu uppe för uthyrning!')
 
-    return render_template('home.html')
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(request.url)
+    file = request.files['file']
+    if file.filename == '':
+        flash('No image selected for uploading')
+        return redirect(request.url)
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        #print('upload_image filename: ' + filename)
+ 
+        cursor.execute("INSERT INTO upload (title) VALUES (%s)", (filename,))
+        conn.commit()
+ 
+        flash('Image successfully uploaded and aisplayed below')
+        return render_template('home.html', filename=filename)
+    else:
+        flash('Allowed image types are - png, jpg, jpeg, gif')
+        return redirect(request.url)
+
+    
 
 @app.route('/profile')
 def profile(): 
