@@ -30,7 +30,7 @@ def login():
    
     # Check if "username" and "password" POST requests exist (user submitted form)
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
-        username = request.form['username']
+        username = request.form['username'].capitalize()
         password = request.form['password']
         print(password)
  
@@ -66,15 +66,15 @@ def register():
     # Check if "username", "password" and "email" POST requests exist (user submitted form)
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form:
         # Create variables for easy access
-        fullname = request.form['fullname']
-        username = request.form['username']
+        fullname = request.form['fullname'].capitalize()
+        username = request.form['username'].capitalize()
         password = request.form['password']
         email = request.form['email']
     
         _hashed_password = generate_password_hash(password)
  
         #Check if account exists using MySQL
-        cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
+        cursor.execute('SELECT * FROM users WHERE username = %s', (username.capitalize(),))
         account = cursor.fetchone()
         print(account)
         # If account exists show error and validation checks
