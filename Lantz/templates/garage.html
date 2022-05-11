@@ -11,10 +11,11 @@ Lägg till article
   <h1>hehjhejhejhe</h1>
   {% for row in data %}
   <div class="inlägg_rubrik">
-    <h3>Garage i Malmö</h3>
-    <h2>Fint garage uthyres för den händige</h2>
+    <h3>Garage i {{row[6]}}</h3>
+    <h2>{{row[0]}}</h2>
+    <h6>Uthyrare:{{row[1]}}</h6>
+    <p>{{row[3]}}</p>
 
-    <div class="separator"></div>
 
     <div class="inlägg_description">
         <span>Lyft • Verktyg • Soptunna </span>
