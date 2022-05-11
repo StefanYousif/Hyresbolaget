@@ -1,4 +1,4 @@
-from django.shortcuts import render
+
 from flask import Flask, request, session, redirect, url_for, render_template, flash
 import psycopg2 
 import psycopg2.extras
@@ -126,7 +126,7 @@ def new_article():
     stad = request.form.get('stad',False)
     beskrivning = request.form.get('beskrivning',False)
     pris = request.form.get('pris',False)
-    cursor.execute("INSERT INTO garage (name, renter, gatuadress, description, price, zipcode, city)  VALUES (%s,%s,%s,%s,%s,%s,%s)", (garagename, renter, gatuadress, postkod, stad, beskrivning, pris ))
+    cursor.execute("INSERT INTO garage (name, renter, gatuadress, description, price, zipcode, city)  VALUES (%s,%s,%s,%s,%s,%s,%s)", (garagename, renter, gatuadress, beskrivning, stad, postkod, pris ))
     conn.commit()
     flash('Ditt garage är nu uppe för uthyrning!')
 
