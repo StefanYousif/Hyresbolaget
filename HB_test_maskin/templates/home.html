@@ -142,7 +142,17 @@ Lägg till article
       </div>
     </div>
   </div>
-
+  <p>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+</p>
 
 <div id="map"></div>
 

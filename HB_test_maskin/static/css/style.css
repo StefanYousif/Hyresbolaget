@@ -29,7 +29,6 @@ body {
     background: linear-gradient(to bottom, #0044ff 0%, #5b6d7c 100%);
     color:#fff;
     position: relative;
-    height:50%;
 
    }
    .login-body
@@ -383,3 +382,4 @@ input {
    margin: 0;
    padding: 0;
  }
+
