@@ -8,7 +8,7 @@
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
 Lägg till article
   </button>
-  <h1>hehjhejhejhe</h1>
+  <h1>Lediga garage</h1>
   {% for row in data %}
   <div class="inlägg_rubrik">
     <h3>{{row[0]}}, {{row[2]}}, {{row[6]}} {{row[5]}}</h3>
@@ -17,6 +17,8 @@ Lägg till article
     <h6>Pris: {{row[4]}}</h6>
     <img src="{{ url_for('display_image', filename=filename) }}">
     <p>{{row[8]}}</p>
+    <img src="{{url_for('static', filename='{{row[8]}}') }}"  style="width:20%">
+
   </div>    
            
         {% endfor %}

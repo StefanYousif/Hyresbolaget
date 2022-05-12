@@ -24,6 +24,8 @@ def home():
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 
+
+
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -120,7 +122,7 @@ def garage():
     data = cursor.fetchall()
     conn.commit()
     return render_template('garage.html',data=data)
-UPLOAD_FOLDER = 'static/uploads/'
+UPLOAD_FOLDER = 'static'
   
 app.secret_key = "secret key"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -128,7 +130,7 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
   
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
   
-@app.route('/hej', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def new_article():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     garagename = request.form.get('garagename',False)
@@ -149,21 +151,24 @@ def new_article():
     if file.filename == '':
         flash('No image selected for uploading')
         return redirect(request.url)
-    if file and allowed_file(file.filename):
+    try:
+        file and allowed_file(file.filename)
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         #print('upload_image filename: ' + filename)
  
         cursor.execute("INSERT INTO upload (title) VALUES (%s)", (filename,))
-
         conn.commit()
  
         flash('Image successfully uploaded and aisplayed below')
         return render_template('home.html', filename=filename)
-    else:
+    except:
         flash('Allowed image types are - png, jpg, jpeg, gif')
         return redirect(request.url)
-
+    finally:
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cursor.execute("UPDATE garage SET title = upload.title FROM upload WHERE garage.id = upload.id")
+        conn.commit()
 
 
 @app.route('/profile')
@@ -179,7 +184,7 @@ def profile():
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 
-UPLOAD_FOLDER = 'static/uploads/'
+UPLOAD_FOLDER = 'static'
   
 app.secret_key = "secret key"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
