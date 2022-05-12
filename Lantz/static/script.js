@@ -1,4 +1,5 @@
-document.getElementById("button").addEventListener("click", function(){
+document.getElementById("button").addEventListener("click", (e)=>{
+    e.preventDefault
     document.querySelector(".popup").style.display = "flex";
 })
 
