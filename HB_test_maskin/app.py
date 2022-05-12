@@ -59,6 +59,10 @@ def login():
  
     return render_template('login.html')
   
+def sassy():
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute("UPDATE garage SET title = upload.title FROM upload WHERE garage.id = upload.id")
+    conn.commit()
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -90,14 +94,16 @@ def register():
             # Account doesnt exists and the form data is valid, now insert new account into users table
             cursor.execute("INSERT INTO users (fullname, username, password, email) VALUES (%s,%s,%s,%s)", (fullname, username, _hashed_password, email))
             conn.commit()
+
             flash('You have successfully registered!')
     elif request.method == 'POST':
-        # Form is empty... (no POST data)
+        # Form is empty... (n   o POST data)
         flash('Please fill out the form!')
     # Show registration form with message (if any)
     return render_template('register.html')
    
-   
+sassy()
+
 @app.route('/logout')
 def logout():
     # Remove session data, this will log the user out
@@ -149,8 +155,8 @@ def new_article():
         #print('upload_image filename: ' + filename)
  
         cursor.execute("INSERT INTO upload (title) VALUES (%s)", (filename,))
+
         conn.commit()
-        
  
         flash('Image successfully uploaded and aisplayed below')
         return render_template('home.html', filename=filename)
@@ -158,7 +164,7 @@ def new_article():
         flash('Allowed image types are - png, jpg, jpeg, gif')
         return redirect(request.url)
 
-    
+
 
 @app.route('/profile')
 def profile(): 

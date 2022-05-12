@@ -4,22 +4,20 @@
   
 {% block content %}
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<p>Välkommen, {{ username|capitalize }}</p>
+<p>Välkommen, {{ username|capitalize }} {{ session['username']|capitalize }}</p>
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
 Lägg till article
   </button>
   <h1>hehjhejhejhe</h1>
-  {% for row in data %}    
-            <tr>
-                <p>Garage 1</p>
-                <td>{{row[0]}}</td>
-                <td>{{row[1]}}</td>
-                <td>{{row[2]}}</td>
-                <td>{{row[3]}}</td>
-                <td>{{row[4]}}</td>
-                <td>{{row[5]}}</td>
-                <td>{{row[6]}}</td>
-            </tr>
+  {% for row in data %}
+  <div class="inlägg_rubrik">
+    <h3>{{row[0]}}, {{row[2]}}, {{row[6]}} {{row[5]}}</h3>
+    <h6>Uthyrare: {{row[1]}}</h6>
+    <p>{{row[3]}}</p>
+    <h6>Pris: {{row[4]}}</h6>
+    <img src="{{ url_for('display_image', filename=filename) }}">
+    <p>{{row[8]}}</p>
+  </div>    
            
         {% endfor %}
   <!-- Modal -->
@@ -31,7 +29,7 @@ Lägg till article
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modabody">
-            <form action="{{ url_for('new_article') }}" method="post" autocomplete="off"> 
+            <form action="{{ url_for('new_article') }}" action="{{ url_for('upload_image') }}" enctype="multipart/form-data" method="post" autocomplete="off"> 
                       <div class="form-group">
                        <label for="garage" class="cols-sm-2 control-label">Namn på garage</label>
                        <div class="cols-sm-10">
@@ -46,7 +44,7 @@ Lägg till article
                        <div class="cols-sm-10">
                         <div class="input-group">
                          <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                         <input type="text" class="form-control" name="renter" id="renter"  placeholder="{{ username|capitalize }}"/>
+                         <input type="text" class="form-control" name="renter" id="renter"  placeholder="{{ session['username']|capitalize }}" readonly/>
                         </div>
                        </div>
                       </div>
