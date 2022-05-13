@@ -345,9 +345,9 @@ input {
 
  #map {
    height: 40%;
-   width: 70%;
+   width: 40%;
    position: absolute;
-   left: 70%;
+   align-items: center;
  }
  
  .inlägg_rubrik {
