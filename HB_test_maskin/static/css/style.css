@@ -347,7 +347,7 @@ input {
    height: 40%;
    width: 40%;
    position: absolute;
-   align-items: center;
+   grid-area: main;
  }
  
  .inlägg_rubrik {
@@ -366,6 +366,11 @@ input {
     backdrop-filter: blur(20px);
     z-index:100;
    
+ }
+
+ .footer {
+    margin-top: 20%!important;
+    grid-area: footer;
  }
 
 .pt-3 {
