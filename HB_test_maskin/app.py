@@ -118,7 +118,7 @@ def logout():
 @app.route('/garage', methods=['GET', 'POST'])
 def garage():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    cursor.execute("select * from garage")
+    cursor.execute("select * from garage order by id desc")
     data = cursor.fetchall()
     conn.commit()
     return render_template('garage.html',data=data)
@@ -134,7 +134,7 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 def new_article():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     garagename = request.form.get('garagename',False)
-    renter = [session['username']]
+    renter = session['username']
     gatuadress = request.form.get('gatuadress',False)
     postkod = request.form.get('postkod',False)
     stad = request.form.get('stad',False)
@@ -160,7 +160,7 @@ def new_article():
         cursor.execute("INSERT INTO upload (title) VALUES (%s)", (filename,))
         conn.commit()
  
-        flash('Image successfully uploaded and aisplayed below')
+        flash('Bild på garage har laddats upp!')
         return render_template('home.html', filename=filename)
     except:
         flash('Allowed image types are - png, jpg, jpeg, gif')
@@ -184,7 +184,7 @@ def profile():
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 
-UPLOAD_FOLDER = 'static'
+UPLOAD_FOLDER = 'static/uploads'
   
 app.secret_key = "secret key"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
