@@ -8,6 +8,7 @@ import safety
 from werkzeug.utils import secure_filename
 import os
 
+
 safety.googlekey
 app = Flask(__name__)
 app.secret_key = 'cairocoders-ednalan'
