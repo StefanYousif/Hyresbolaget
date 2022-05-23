@@ -20,7 +20,7 @@ def home():
     if 'loggedin' in session:
     
         # User is loggedin show them the home page
-        return render_template('home.html', username=session['username'])
+        return render_template('home.html', username=[session['username']])
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
 
@@ -122,8 +122,34 @@ def garage():
     data = cursor.fetchall()
     conn.commit()
     return render_template('garage.html',data=data)
+
+@app.route('/messages', methods=['GET', 'POST'])
+def show_messages():
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute("select * from messages")
+    data = cursor.fetchall()
+    conn.commit()
+    return render_template('messages.html',data=data)
+
+@app.route('/messages', methods=['GET', 'POST'])
+def messages():
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    renter = session['username']
+    fron = session['username']
+    to = request.form.get('to')
+    text = request.form.get('text')
+    cursor.execute("INSERT INTO messages (users, fron, too, text)  VALUES (%s,%s,%s,%s)", (renter, fron, to, text))
+    conn.commit()
+    flash('Ditt meddelande har skickats!')
+    
+    
+    return render_template('messages.html')
 UPLOAD_FOLDER = 'static'
-  
+  #visa meddelanden
+  #   cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+  #  cursor.execute("select * from messages")
+   # data = cursor.fetchall()
+    #conn.commit()
 app.secret_key = "secret key"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
@@ -169,6 +195,10 @@ def new_article():
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute("UPDATE garage SET title = upload.title FROM upload WHERE garage.id = upload.id")
         conn.commit()
+
+
+
+
 
 
 @app.route('/profile')
