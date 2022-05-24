@@ -19,6 +19,10 @@ Lägg till garage
     <h6>Uthyrare: {{row[1]}}</h6>
     <p>{{row[3]}}</p>
     <h6>Pris: {{row[4]}}</h6>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+      Skicka ett meddelande
+        </button>
+  
     <img src="/static/uploads/{{row[8]}}" style="width:200px; height: 200px;">
 
  
@@ -195,13 +199,59 @@ Lägg till garage
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Stäng</button>
-          <button type="button" class="btn btn-primary">Spara ändringar</button>
         </div>
       </div>
     </div>
   </div>
 
-
+  <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Lägg till garage</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modabody">
+            <form action="{{ url_for('messages') }}" enctype="multipart/form-data" method="POST" autocomplete="off"> 
+                      <div class="form-group">
+                       <label for="renter" class="cols-sm-2 control-label">Uthyrare</label>
+                       <div class="cols-sm-10">
+                        <div class="input-group">
+                         <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                         <input type="text" class="form-control" name="renter" id="renter"  placeholder="{{ session['username']|capitalize }}" readonly/>
+                        </div>
+                       </div>
+                      </div>
+                      <div class="form-group">
+                       <label for="garage" class="cols-sm-2 control-label">Från</label>
+                       <div class="cols-sm-10">
+                        <div class="input-group">
+                         <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                         <input type="text" class="form-control" name="fron" id="fron"  placeholder="{{ session['username']|capitalize }}" readonly/>
+                        </div>
+                       </div>
+                      </div>
+                      <div class="form-group">
+                         <label for="adress" class="cols-sm-2 control-label">Till</label>
+                         <div class="cols-sm-10">
+                          <div class="input-group">
+                           <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                           <input type="text" class="form-control" name="to" id="to" placeholder="Namn på mottagare" required>
+                          </div>
+                         </div>
+                        </div>
+                  <div class="form-group">
+                           <label for="adress" class="cols-sm-2 control-label">Text</label>
+                           <div class="cols-sm-10">
+                            <div class="input-group">
+                             <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                             <input type="text" class="form-control" name="text" id="text" placeholder="Ditt meddelande " required>
+                    
+                            </div> <br>
+                    <input type="submit" value="Submit" class="form-control btn btn-primary " name="">
+                           <p style="padding:5px;">
+                           </div>
+                          </div>
 <!-- <div id="map"></div> -->
 <!-- 
  The `defer` attribute causes the callback to execute after the full HTML
