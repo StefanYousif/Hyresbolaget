@@ -123,25 +123,33 @@ def garage():
     conn.commit()
     return render_template('garage.html',data=data)
 
-@app.route('/messages', methods=['GET', 'POST'])
+
+
+@app.route('/messages', methods=['GET'])
 def show_messages():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    cursor.execute("select * from messages")
+    cursor.execute("select * from messages where too = %s", [session['username']])
     data = cursor.fetchall()
     conn.commit()
     return render_template('messages.html',data=data)
 
+
+
+    
 @app.route('/messages', methods=['GET', 'POST'])
 def messages():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     renter = session['username']
     fron = session['username']
-    to = request.form('to')
-    text = request.form('text')
+    to = request.form.get('to')
+    text = request.form.get('text')
+    print("hej")    
     cursor.execute("INSERT INTO messages (users, fron, too, text)  VALUES (%s,%s,%s,%s)", (renter, fron, to, text))
     conn.commit()
     flash('Ditt meddelande har skickats!')
     return render_template('messages.html')
+
+
     
     
 UPLOAD_FOLDER = 'static'
@@ -197,10 +205,6 @@ def new_article():
         conn.commit()
 
 
-
-
-
-
 @app.route('/profile')
 def profile(): 
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -213,6 +217,14 @@ def profile():
         return render_template('profile.html', account=account)
     # User is not loggedin redirect to login page
     return redirect(url_for('login'))
+
+@app.route('/profile', methods=['GET', 'POST'])
+def profile_garage():
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cursor.execute("select * from garage where renter = %s", [session['username']])
+    account = cursor.fetchone()
+    conn.commit()
+    return render_template('profile.html',account=account)
 
 UPLOAD_FOLDER = 'static/uploads'
   

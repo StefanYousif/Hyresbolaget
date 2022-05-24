@@ -121,11 +121,32 @@ body {
   margin-top: 5px;
   }
    
+
+  
   .login-register{
   font-size: 11px;
   text-align: center;
   }
    
+  .modal-backdrop {
+
+   display: none;
+ }
+ 
+ .modal {
+
+   background: rgba(0,0,0,0.5);
+ }
+ 
+ or
+ 
+ .modal{
+   background-color: rgba(0, 0, 0, 0.3);
+ }
+ .modal-backdrop{
+   position: relative;
+ }
+
   .site-header {
      background-color: #0E6EFD;
      -webkit-backdrop-filter: saturate(180%) blur(20px);
@@ -215,6 +236,7 @@ h1 {
    padding: 10px;
    display: flex;
    justify-content: center;
+   margin-top:5%!important
 }
 
 main{
