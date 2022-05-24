@@ -20,8 +20,7 @@ Lägg till garage
     <p>{{row[3]}}</p>
     <h6>Pris: {{row[4]}}</h6>
     <img src="/static/uploads/{{row[8]}}" style="width:200px; height: 200px;">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-Boka garage!        </button>
+
  
     
     <script>
@@ -63,84 +62,7 @@ Boka garage!        </button>
       }
     </script>
   </div>    
-          
-         <!-- Modal -->
-         <div class="modal fade" id="exampleModal1"  aria-labelledby="exampleModalLabel" >
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Boka det här garaget!</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modabody">
-                  <form action="{{ url_for('new_article') }}" action="{{ url_for('upload_image') }}" enctype="multipart/form-data" method="post" autocomplete="off"> 
-                            <div class="form-group">
-                             <label for="garage" class="cols-sm-2 control-label">Uthyrare:</label>
-                             <div class="cols-sm-10">
-                              <div class="input-group">
-                               <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                               <input type="text" class="form-control" name="garagename" id="garagename"  placeholder="{{row[1]}}" readonly/>
-                              </div>
-                             </div>
-                            </div>
-                            <div class="form-group">
-                             <label for="renter" class="cols-sm-2 control-label">Bokare</label>
-                             <div class="cols-sm-10">
-                              <div class="input-group">
-                               <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                               <input type="text" class="form-control" name="renter" id="renter"  placeholder="{{ session['username']|capitalize }}" readonly/>
-                              </div>
-                             </div>
-                            </div>
-              
-                
-                            <div class="form-group">
-                             <label for="beskrivning" class="cols-sm-2 control-label">Beskrivning</label>
-                             <div class="cols-sm-10">
-                              <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                                <input type="text" class="form-control" name="beskrivning" id="beskrivning" placeholder="Beskriv ditt garage" required>
-                               </div>
-                             </div>
-                            </div>
-                         <div class="form-group">
-                               <label for="pris" class="cols-sm-2 control-label">Pris</label>
-                               <div class="cols-sm-10">
-                                <div class="input-group">
-                                 <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                                 <input type="text" class="form-control" name="pris" id="pris"  placeholder="Ditt timpris på garaget"/>
-                                </div>
-                               </div>
-                              </div>
-                            <div class="form-group ">
-                              {% with messages = get_flashed_messages()  %}
-                              {% if messages %}
-                              {% for message in messages %}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                  <span aria-hidden="true">×</span>
-                                </button>
-      
-                              {% endfor %}
-                              {% endif %}
-                              {% endwith %}
-                      <div class="container">
-                       </div>
-                    
-                             <input type="submit" value="Lägg till" class="form-control btn btn-primary " name="">
-                             <p style="padding:5px;">
-                              
-                            </div>
-                              
-                           </form>
-          
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Stäng</button>
-                <button type="button" class="btn btn-primary">Spara ändringar</button>
-              </div>
-            </div>
-          </div>
-        </div>
+
         {% endfor %}
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

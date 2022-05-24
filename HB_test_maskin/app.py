@@ -222,9 +222,9 @@ def profile():
 def profile_garage():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cursor.execute("select * from garage where renter = %s", [session['username']])
-    account = cursor.fetchone()
+    dota1 = cursor.fetchall()
     conn.commit()
-    return render_template('profile.html',account=account)
+    return render_template('profile.html',dota1=dota1)
 
 UPLOAD_FOLDER = 'static/uploads'
   
