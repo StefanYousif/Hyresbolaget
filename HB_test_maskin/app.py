@@ -136,14 +136,14 @@ def messages():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     renter = session['username']
     fron = session['username']
-    to = request.form.get('to')
-    text = request.form.get('text')
+    to = request.form('to')
+    text = request.form('text')
     cursor.execute("INSERT INTO messages (users, fron, too, text)  VALUES (%s,%s,%s,%s)", (renter, fron, to, text))
     conn.commit()
     flash('Ditt meddelande har skickats!')
-    
-    
     return render_template('messages.html')
+    
+    
 UPLOAD_FOLDER = 'static'
   #visa meddelanden
   #   cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)

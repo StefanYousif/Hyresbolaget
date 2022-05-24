@@ -9,6 +9,7 @@
     Skicka ett meddelande
       </button>
       <h1>Meddelanden</h1>
+      <p>Välkommen, {{ session['username']|capitalize }}</p>
       {% for row in data %}
       <div class="message">
 
@@ -18,7 +19,7 @@
         <p>Meddelande: {{row[3]}}</p>
     
       </div>  
-               
+      
             {% endfor %}
       <!-- Modal -->
       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

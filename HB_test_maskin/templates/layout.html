@@ -14,9 +14,9 @@
 
 </head>
  <body class="loggedin">
- <nav class="site-header sticky-top py-1">
+ <nav class="site-header sticky-top py-1" href="{{ url_for('home') }}">
       <div class="container d-flex flex-column flex-md-row justify-content-between">
-  <img src="{{url_for('static', filename='logo.png')}}" class="logo" alt="asdd" width=200px height=200px>
+  <img src="{{url_for('static', filename='logo.png')}}" href="{{ url_for('home') }}" class="logo" alt="asdd" width=200px height=200px>
   <a class="py-2 d-none d-md-inline-block" href="{{ url_for('home') }}"><i class="fas fa-home"></i> Hem</a>
   <a class="py-2 d-none d-md-inline-block" href="{{ url_for('garage') }}"><i class="fas fa-warehouse"></i> Garage</a>
   <a class="py-2 d-none d-md-inline-block" href="{{ url_for('messages') }}"><i class="fas fa-comments"></i> Meddelanden</a>
