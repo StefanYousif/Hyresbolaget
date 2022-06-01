@@ -53,10 +53,14 @@ def login():
                 return redirect(url_for('home'))
             else:
                 # Account doesnt exist or username/password incorrect
-                flash('fel username/password')
+                flash('Fel användarnamn/lösenord')
         else:
             # Account doesnt exist or username/password incorrect
+<<<<<<< Updated upstream
             flash('Felaktigt namn/lösenord')
+=======
+            flash('Fel användarnamn/lösenord')
+>>>>>>> Stashed changes
  
     return render_template('login.html')
   
