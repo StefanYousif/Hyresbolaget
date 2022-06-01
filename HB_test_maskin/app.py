@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from flask import Flask, request, session, redirect, url_for, render_template, flash
 import psycopg2 
 import psycopg2.extras
@@ -8,23 +7,24 @@ import safety
 from werkzeug.utils import secure_filename
 import os
 
-safety.googlekey
 app = Flask(__name__)
 app.secret_key = 'cairocoders-ednalan'
  
+#Safetyfilen innehåller databasen login samt nyckeln till google maps api:et
+#Den är dold så att ingen obehörig ska kunna ha tillträde till vår databas 
+#Samt googles nyckel måste vara för oss själva och ej public
+safety.googlekey
 conn = psycopg2.connect(dbname=safety.DB_NAME, user=safety.DB_USER, password=safety.DB_PASS, host=safety.DB_HOST)
 
 @app.route('/')
 def home():
-    # Check if user is loggedin
+    #Kontrollerar ifall användaren är inloggad på hemsidan
     if 'loggedin' in session:
     
-        # User is loggedin show them the home page
+        #ifall personen är inloggad, fortsätt som användarens session
         return render_template('home.html', username=[session['username']])
-    # User is not loggedin redirect to login page
+    #Ej inloggad -> skickas tillbaka till loginsidan
     return redirect(url_for('login'))
-
-
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
@@ -61,15 +61,19 @@ def login():
  
     return render_template('login.html')
   
-def sassy():
+  #Var tvunget att ha denna funktionen för att kunna uppdatera id:et på garaget
+# och id:et för bilden, så att de alltid hamnar på samma rad
+# i sin tabell i databasen   
+def update_garage_id():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cursor.execute("UPDATE garage SET title = upload.title FROM upload WHERE garage.id = upload.id")
     conn.commit()
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
  
-    # Check if "username", "password" and "email" POST requests exist (user submitted form)
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form:
         # Create variables for easy access
         fullname = request.form['fullname']
@@ -79,33 +83,37 @@ def register():
     
         _hashed_password = generate_password_hash(password)
  
-        #Check if account exists using MySQL
+        #Skapar konto till hemsidan
         cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
         account = cursor.fetchone()
         print(account)
-        # If account exists show error and validation checks
+        #kollar ifall kontot existerar och felaktigheter vid skapadet
+        #så som fel tecken, email osv
         if account:
-            flash('Account already exists!')
+            flash('Kontot existerar redan!')
         elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
-            flash('Invalid email address!')
+            flash('Felaktig emailaddress!')
         elif not re.match(r'[A-Za-z0-9]+', username):
-            flash('Username must contain only characters and numbers!')
+            flash('Användarnamet får bara innehålla bokstäver och siffror')
         elif not username or not password or not email:
-            flash('Please fill out the form!')
+            flash('Vänligen fyll i de tomma fälten!')
         else:
-            # Account doesnt exists and the form data is valid, now insert new account into users table
+            #Ifall kontot ej finns, så skapar vi ett och lägger till i databasen
             cursor.execute("INSERT INTO users (fullname, username, password, email) VALUES (%s,%s,%s,%s)", (fullname, username, _hashed_password, email))
             conn.commit()
 
-            flash('You have successfully registered!')
+            flash('Du har registrerat dig, välkommen!')
     elif request.method == 'POST':
-        # Form is empty... (n   o POST data)
-        flash('Please fill out the form!')
+        flash('Vänligen fyll i de tomma fälten!')
     # Show registration form with message (if any)
     return render_template('register.html')
    
-sassy()
+#Var tvunget att ha denna funktionen för att kunna uppdatera id:et på garaget
+# och id:et för bilden, så att de alltid hamnar på samma rad
+# i sin tabell i databasen   
+update_garage_id()
 
+#Loggar ut personen
 @app.route('/logout')
 def logout():
     # Remove session data, this will log the user out
@@ -115,6 +123,8 @@ def logout():
    # Redirect to login page
    return redirect(url_for('login'))
    
+
+#Den här funktionen visar upp alla garage på garagesidan   
 @app.route('/garage', methods=['GET', 'POST'])
 def garage():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -124,7 +134,7 @@ def garage():
     return render_template('garage.html',data=data)
 
 
-
+#Den här funktionen visar upp mottagna meddelanden för personen
 @app.route('/messages', methods=['GET'])
 def show_messages():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -134,8 +144,8 @@ def show_messages():
     return render_template('messages.html',data=data)
 
 
-
-    
+#Funktionen för att kunna skicka meddelanden
+#sedan sparas meddelandet i databasen
 @app.route('/messages', methods=['GET', 'POST'])
 def messages():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -149,21 +159,14 @@ def messages():
     flash('Ditt meddelande har skickats!')
     return render_template('messages.html')
 
-
-    
-    
 UPLOAD_FOLDER = 'static'
-  #visa meddelanden
-  #   cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-  #  cursor.execute("select * from messages")
-   # data = cursor.fetchall()
-    #conn.commit()
 app.secret_key = "secret key"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
   
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
-  
+#Den här funktionen lägger till ett garage i databasen och sedan
+#hämtar information från hemsidan i form av ett formulär + en bild.
 @app.route('/', methods=['GET', 'POST'])
 def new_article():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -177,46 +180,46 @@ def new_article():
     cursor.execute("INSERT INTO garage (name, renter, gatuadress, description, price, zipcode, city)  VALUES (%s,%s,%s,%s,%s,%s,%s)", (garagename, renter, gatuadress, beskrivning, pris, postkod, stad ))
     conn.commit()
     flash('Ditt garage är nu uppe för uthyrning!')
-
     if 'file' not in request.files:
-        flash('No file part')
+        flash('Ingen fil vald')
         return redirect(request.url)
     file = request.files['file']
     if file.filename == '':
-        flash('No image selected for uploading')
+        flash('Ingen bild vald för uppladdning')
         return redirect(request.url)
     try:
         file and allowed_file(file.filename)
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        #print('upload_image filename: ' + filename)
- 
         cursor.execute("INSERT INTO upload (title) VALUES (%s)", (filename,))
         conn.commit()
- 
         flash('Bild på garage har laddats upp!')
         return render_template('home.html', filename=filename)
     except:
-        flash('Allowed image types are - png, jpg, jpeg, gif')
+        flash('Tillåtna bilder är - png, jpg, jpeg, gif')
         return redirect(request.url)
     finally:
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cursor.execute("UPDATE garage SET title = upload.title FROM upload WHERE garage.id = upload.id")
         conn.commit()
 
-
+#Den här funktionen skickar personen till profilsidan där de 
+#kan se sina uppgifter
 @app.route('/profile')
 def profile(): 
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
    
-    # Check if user is loggedin
+    #Kollar ifall användaren är inloggad
     if 'loggedin' in session:
         cursor.execute('SELECT * FROM users WHERE id = %s', [session['id']])
         account = cursor.fetchone()
         # Show the profile page with account info
         return render_template('profile.html', account=account)
-    # User is not loggedin redirect to login page
+    # Ifall användaren inte är inloggad;
     return redirect(url_for('login'))
+
+#Den här funktionen skulle visa upp alla garage för personen som har
+#lagt upp garagen
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile_garage():
@@ -232,6 +235,7 @@ app.secret_key = "secret key"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
   
+  #De tillåtna filändelsena
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
   
 def allowed_file(filename):
@@ -240,18 +244,18 @@ def allowed_file(filename):
 @app.route('/home', methods=['GET', 'POST'])
 def upload_image():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    
+    #Säkerställer att filen läggs till
     if 'file' not in request.files:
-        flash('No file part')
+        flash('Ingen fil vad')
         return redirect(request.url)
     file = request.files['file']
     if file.filename == '':
-        flash('No image selected for uploading')
+        flash('Ingen fil vad')
         return redirect(request.url)
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        #print('upload_image filename: ' + filename)
+        
  
         cursor.execute("INSERT INTO upload (title) VALUES (%s)", (filename,))
         conn.commit()
@@ -259,15 +263,17 @@ def upload_image():
         flash('Image successfully uploaded and aisplayed below')
         return render_template('home.html', filename=filename)
     else:
-        flash('Allowed image types are - png, jpg, jpeg, gif')
+        flash('Tillåtna filer är - png, jpg, jpeg, gif')
         return redirect(request.url)
   
+
+ #Den här koden visar upp bilden man nyss har laddat upp. 
 @app.route('/display/<filename>')
 def display_image(filename):
     #print('display_image filename: ' + filename)
     return redirect(url_for('static', filename='uploads/' + filename), code=301) 
 
 
-
+#Runnar hela programmet
 if __name__ == "__main__":
     app.run(debug=True)

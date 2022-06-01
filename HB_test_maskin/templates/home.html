@@ -18,13 +18,13 @@ Lägg till garage
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modabody">
-            <form action="{{ url_for('new_article') }}" action="{{ url_for('upload_image') }}" enctype="multipart/form-data" method="post" autocomplete="off"> 
+            <form action="{{ url_for('new_article') }}" action="{{ url_for('upload_image')}}" enctype="multipart/form-data" method="post" autocomplete="off"> 
                       <div class="form-group">
                        <label for="garage" class="cols-sm-2 control-label">Namn på garage</label>
                        <div class="cols-sm-10">
                         <div class="input-group">
                          <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                         <input type="text" class="form-control" name="garagename" id="garagename"  placeholder="Valfritt namn som syns på hemsidan"/>
+                         <input type="text" class="form-control" name="garagename" id="garagename" placeholder="Valfritt namn som syns på hemsidan"/>
                         </div>
                        </div>
                       </div>
@@ -81,11 +81,11 @@ Lägg till garage
                          <div class="cols-sm-10">
                           <div class="input-group">
                            <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                           <input type="text" class="form-control" name="pris" id="pris"  placeholder="Ditt timpris på garaget"/>
+                           <input type="text" class="form-control" name="pris" id="pris" placeholder="Ditt timpris på garaget"/>
                           </div>
                          </div>
                         </div>
-                      <div class="form-group ">
+              <div class="form-group">
                         {% with messages = get_flashed_messages()  %}
                         {% if messages %}
                         {% for message in messages %}
@@ -101,7 +101,7 @@ Lägg till garage
                 <div class="container">
                   <div class="row">
                       <h2>Välj en bild</h2>
-                      <p>
+                      
                           {% with messages = get_flashed_messages() %}
                             {% if messages %}
                               <ul>
@@ -111,7 +111,7 @@ Lägg till garage
                               </ul>
                             {% endif %}
                           {% endwith %}
-                      </p>
+                        </div>
                       {% if filename %}
                           <div>
                               <img src="{{ url_for('display_image', filename=filename) }}">
