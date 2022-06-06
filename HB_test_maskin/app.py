@@ -10,20 +10,20 @@ import os
 app = Flask(__name__)
 app.secret_key = 'cairocoders-ednalan'
  
-#Safetyfilen innehåller databasen login samt nyckeln till google maps api:et
-#Den är dold så att ingen obehörig ska kunna ha tillträde till vår databas 
-#Samt googles nyckel måste vara för oss själva och ej public
+#The safety file contains the login database and the key to the google maps api
+#It is hidden so that no unauthorized person can have access to our database
+#As well as google's key must be for ourselves and not public.
 safety.googlekey
 conn = psycopg2.connect(dbname=safety.DB_NAME, user=safety.DB_USER, password=safety.DB_PASS, host=safety.DB_HOST)
 
 @app.route('/')
 def home():
-    #Kontrollerar ifall användaren är inloggad på hemsidan
+    #Checks if the user is logged in to the website
     if 'loggedin' in session:
     
-        #ifall personen är inloggad, fortsätt som användarens session
+        #If the person is logged in, continue as the user's session
         return render_template('home.html', username=[session['username']])
-    #Ej inloggad -> skickas tillbaka till loginsidan
+    #Not logged in -> sent back to the login page
     return redirect(url_for('login'))
 
 @app.route('/login/', methods=['GET', 'POST'])
@@ -44,7 +44,7 @@ def login():
         if account:
             password_rs = account['password']
             print(password_rs)
-            # If account exists in users table in out database
+            # If account exists in users table in our database
             if check_password_hash(password_rs, password):
                 # Create session data, we can access this data in other routes
                 session['loggedin'] = True
@@ -61,9 +61,9 @@ def login():
  
     return render_template('login.html')
   
-  #Var tvunget att ha denna funktionen för att kunna uppdatera id:et på garaget
-# och id:et för bilden, så att de alltid hamnar på samma rad
-# i sin tabell i databasen   
+#Function for updating ID on garage
+#And for updating ID for image, so that they end up on the same row 
+#In the database   
 def update_garage_id():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cursor.execute("UPDATE garage SET title = upload.title FROM upload WHERE garage.id = upload.id")
@@ -83,12 +83,12 @@ def register():
     
         _hashed_password = generate_password_hash(password)
  
-        #Skapar konto till hemsidan
+        #Create profile on website
         cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
         account = cursor.fetchone()
         print(account)
-        #kollar ifall kontot existerar och felaktigheter vid skapadet
-        #så som fel tecken, email osv
+        #Looks if account exist or is spelled wrong
+        #For example, wrong sign or email
         if account:
             flash('Kontot existerar redan!')
         elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
@@ -98,7 +98,7 @@ def register():
         elif not username or not password or not email:
             flash('Vänligen fyll i de tomma fälten!')
         else:
-            #Ifall kontot ej finns, så skapar vi ett och lägger till i databasen
+            #If account don't exist. Create and add in database
             cursor.execute("INSERT INTO users (fullname, username, password, email) VALUES (%s,%s,%s,%s)", (fullname, username, _hashed_password, email))
             conn.commit()
 
@@ -108,12 +108,12 @@ def register():
     # Show registration form with message (if any)
     return render_template('register.html')
    
-#Var tvunget att ha denna funktionen för att kunna uppdatera id:et på garaget
-# och id:et för bilden, så att de alltid hamnar på samma rad
-# i sin tabell i databasen   
+#Function for updating ID on garage
+#And for updating ID for image, so that they end up on the same row 
+#In the database    
 update_garage_id()
 
-#Loggar ut personen
+#Logout function
 @app.route('/logout')
 def logout():
     # Remove session data, this will log the user out
@@ -124,7 +124,7 @@ def logout():
    return redirect(url_for('login'))
    
 
-#Den här funktionen visar upp alla garage på garagesidan   
+#Functions shows all garages
 @app.route('/garage', methods=['GET', 'POST'])
 def garage():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -134,7 +134,7 @@ def garage():
     return render_template('garage.html',data=data)
 
 
-#Den här funktionen visar upp mottagna meddelanden för personen
+#Function show received messages
 @app.route('/messages', methods=['GET'])
 def show_messages():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -144,8 +144,8 @@ def show_messages():
     return render_template('messages.html',data=data)
 
 
-#Funktionen för att kunna skicka meddelanden
-#sedan sparas meddelandet i databasen
+#Function for sending messages
+#Then messages saves in database
 @app.route('/messages', methods=['GET', 'POST'])
 def messages():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -165,8 +165,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
   
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
-#Den här funktionen lägger till ett garage i databasen och sedan
-#hämtar information från hemsidan i form av ett formulär + en bild.
+#Function adds garage in database and then
+#Recieve information from website in the form of a form + a picture.
 @app.route('/', methods=['GET', 'POST'])
 def new_article():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -203,23 +203,22 @@ def new_article():
         cursor.execute("UPDATE garage SET title = upload.title FROM upload WHERE garage.id = upload.id")
         conn.commit()
 
-#Den här funktionen skickar personen till profilsidan där de 
-#kan se sina uppgifter
+#Function sends user to profilepage
+#can see accountinformation
 @app.route('/profile')
 def profile(): 
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
    
-    #Kollar ifall användaren är inloggad
+    #Checks if user logged-in
     if 'loggedin' in session:
         cursor.execute('SELECT * FROM users WHERE id = %s', [session['id']])
         account = cursor.fetchone()
         # Show the profile page with account info
         return render_template('profile.html', account=account)
-    # Ifall användaren inte är inloggad;
+    # If user not logged in;
     return redirect(url_for('login'))
 
-#Den här funktionen skulle visa upp alla garage för personen som har
-#lagt upp garagen
+#Function should've shown all garages a user has added 
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile_garage():
@@ -235,7 +234,7 @@ app.secret_key = "secret key"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
   
-  #De tillåtna filändelsena
+  #Allowed file extensions
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
   
 def allowed_file(filename):
@@ -244,7 +243,7 @@ def allowed_file(filename):
 @app.route('/home', methods=['GET', 'POST'])
 def upload_image():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    #Säkerställer att filen läggs till
+    #Ensures that the file is added
     if 'file' not in request.files:
         flash('Ingen fil vad')
         return redirect(request.url)
@@ -267,13 +266,13 @@ def upload_image():
         return redirect(request.url)
   
 
- #Den här koden visar upp bilden man nyss har laddat upp. 
+ #This code shows the image user have just uploaded.
 @app.route('/display/<filename>')
 def display_image(filename):
     #print('display_image filename: ' + filename)
     return redirect(url_for('static', filename='uploads/' + filename), code=301) 
 
 
-#Runnar hela programmet
+#Runs the programme
 if __name__ == "__main__":
     app.run(debug=True)
