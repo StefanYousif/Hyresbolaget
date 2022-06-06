@@ -129,7 +129,12 @@ body {
    position: absolute;
    right: 4%;
   }
-   
+
+  .site-header > p {
+   position:absolute;
+   color: white;
+   padding-left: 5%;
+  }
   .login-register{
   font-size: 11px;
   text-align: center;

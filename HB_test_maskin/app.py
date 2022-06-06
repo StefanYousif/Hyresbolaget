@@ -245,11 +245,11 @@ def upload_image():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     #Ensures that the file is added
     if 'file' not in request.files:
-        flash('Ingen fil vad')
+        flash('Ingen fil vald')
         return redirect(request.url)
     file = request.files['file']
     if file.filename == '':
-        flash('Ingen fil vad')
+        flash('Ingen fil vald')
         return redirect(request.url)
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
@@ -258,8 +258,6 @@ def upload_image():
  
         cursor.execute("INSERT INTO upload (title) VALUES (%s)", (filename,))
         conn.commit()
- 
-        flash('Image successfully uploaded and aisplayed below')
         return render_template('home.html', filename=filename)
     else:
         flash('Tillåtna filer är - png, jpg, jpeg, gif')
