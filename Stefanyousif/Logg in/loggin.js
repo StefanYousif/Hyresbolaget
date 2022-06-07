@@ -18,3 +18,12 @@ $("#login-box-link").click(function(){
   $("#login-box-link").addClass("active");
   $("#signup-box-link").removeClass("active");
 });
+
+
+$(".toggle_button").click(function(){
+  $("p").hide();
+});
+
+$(".toggle_button").click(function(){
+  $("p").show();
+});
